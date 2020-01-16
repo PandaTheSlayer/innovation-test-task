@@ -1,4 +1,4 @@
-FROM php:cli-alpine
+FROM php:7.4.1-cli-alpine3.11
 
 RUN apk add --no-cache bash libxml2-dev libzip-dev oniguruma-dev
 
