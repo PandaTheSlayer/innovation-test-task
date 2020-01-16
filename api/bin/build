@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+function runCmd {
+    CMD=$1
+    echo -e "\e[1;39;42m$CMD\e[0m"
+
+    if [[ $2 == '--dry-run' ]]; then
+        return
+    fi
+
+    # actual command run
+    eval $CMD
+    rc=$?
+    if [[ $rc != 0 ]]; then
+        echo -e "\e[1;41m                                                  \e[0m"
+        echo -e "\e[1;41m               Something went wrong!              \e[0m"
+        echo -e "\e[1;41m                                                  \e[0m"
+        exit 1
+    fi
+}
+
+TASKS=(
+	"composer install"
+	"bin/console doctrine:migrations:migrate"
+	"bin/console doctrine:fixtures:load"
+)
+
+for ix in ${!TASKS[*]}
+do
+	runCmd "${TASKS[$ix]}"
+done
+
