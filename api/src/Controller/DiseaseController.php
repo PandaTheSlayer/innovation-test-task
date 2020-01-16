@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Disease;
 use App\Entity\Drug;
+use App\Repository\DiseaseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,14 +14,13 @@ class DiseaseController extends AbstractController
     /**
      * @Route("/disease/{id}", name="disease")
      * @param int $id
+     * @param DiseaseRepository $diseaseRepository
      * @return JsonResponse
      */
-    public function index(int $id)
+    public function index(int $id, DiseaseRepository $diseaseRepository): JsonResponse
     {
         /** @var Disease $disease */
-        $disease = $this->getDoctrine()
-            ->getRepository(Disease::class)
-            ->find($id);
+        $disease = $diseaseRepository->find($id);
 
         $drugs = $disease->getDrugs()->toArray();
 
