@@ -9,15 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DiseaseController extends AbstractController
+/**
+ * @Route("/disease/{id}", name="disease")
+ */
+class CureDisease extends AbstractController
 {
     /**
-     * @Route("/disease/{id}", name="disease")
      * @param int $id
      * @param DiseaseRepository $diseaseRepository
      * @return JsonResponse
      */
-    public function index(int $id, DiseaseRepository $diseaseRepository): JsonResponse
+    public function __invoke(int $id, DiseaseRepository $diseaseRepository): JsonResponse
     {
         /** @var Disease $disease */
         $disease = $diseaseRepository->find($id);
