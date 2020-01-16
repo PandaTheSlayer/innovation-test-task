@@ -20,13 +20,13 @@ function runCmd {
 }
 
 TASKS=(
-	"composer install"
-	"bin/console doctrine:migrations:migrate"
-	"bin/console doctrine:fixtures:load"
+    "composer install"
+    "bin/console doctrine:migrations:migrate"
+    "bin/console doctrine:fixtures:load"
 )
 
 for ix in ${!TASKS[*]}
 do
-	runCmd "${TASKS[$ix]}"
+    runCmd "${TASKS[$ix]}"
 done
 
