@@ -33,6 +33,7 @@ while (time() != $timeToEnd) {
 
 dump($totalReqs, $thresholdedReqs, calculatePercentage($totalReqs, $thresholdedReqs));
 
-function calculatePercentage(int $total, int $thresholded): float {
-    return ($thresholded / $total) * 100;
+function calculatePercentage(int $total, int $thresholded): int
+{
+    return (int) (($thresholded / $total) * 100);
 }
