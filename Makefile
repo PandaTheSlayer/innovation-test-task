@@ -4,8 +4,11 @@ dcup:
 dcbash:
 	docker-compose exec fpm bash
 
-projup:
+apiup:
 	docker-compose exec fpm bash bin/build
 
+clientup:
+	docker-compose exec client bash composer install
+
 test:
-	docker-compose exec fpm php bin/test
+	docker-compose exec client php bin/test

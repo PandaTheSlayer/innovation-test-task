@@ -11,6 +11,15 @@ services:
     - ./api:/app
     working_dir: /app
 
+  client:
+    build:
+      context: docker/client
+      dockerfile: Dockerfile
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./client:/app
+
   nginx:
     image: nginx
     working_dir: /app
