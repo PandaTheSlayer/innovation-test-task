@@ -20,7 +20,7 @@ $timeToEnd = (int)($startTime + $seconds);
 $client = new Client();
 
 while (time() != $timeToEnd) {
-    $id = random_int(10001, 20000);
+    $id = random_int(1, 10000);
     $response = $client->get('http://nginx:80/disease/' . $id, [
         'on_stats' => function (TransferStats $stats) use (&$reqTimeVals, $threshold, &$totalReqs, &$thresholdedReqs) {
             $totalReqs++;
