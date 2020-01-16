@@ -11,29 +11,35 @@ $minutes = $argv[1] ?? exit('Please, provide minutes as arg!' . PHP_EOL);
 $threshold = $argv[2] ?? 0.5;
 $seconds = $minutes * 60;
 $startTime = time();
+$totalReqs = 0;
+$thresholdedReqs = 0;
+$reqTimeVals = [];
 
 $timeToEnd = (int)($startTime + $seconds);
 
 $client = new Client();
 
-$totalReqs = 0;
-$thresholdedReqs = 0;
-
 while (time() != $timeToEnd) {
     $id = random_int(10001, 20000);
     $response = $client->get('http://nginx:80/disease/' . $id, [
-        'on_stats' => function (TransferStats $stats) use ($threshold, &$totalReqs, &$thresholdedReqs) {
+        'on_stats' => function (TransferStats $stats) use (&$reqTimeVals, $threshold, &$totalReqs, &$thresholdedReqs) {
             $totalReqs++;
             if ($stats->getTransferTime() > $threshold) {
                 $thresholdedReqs++;
             }
+            $reqTimeVals[] = $stats->getTransferTime();
         }
     ]);
 }
 
-dump($totalReqs, $thresholdedReqs, calculatePercentage($totalReqs, $thresholdedReqs));
+$percentage = calculatePercentage($totalReqs, $thresholdedReqs);
+
+print "Total requests: $totalReqs" . PHP_EOL;
+print "Thresholded requests: $thresholdedReqs" . PHP_EOL;
+print "Percentage of thresholded requests: $percentage%" . PHP_EOL;
+print "Average ms for request: " . array_sum($reqTimeVals) / $totalReqs . PHP_EOL;
 
 function calculatePercentage(int $total, int $thresholded): int
 {
-    return (int) (($thresholded / $total) * 100);
+    return (int)(($thresholded / $total) * 100);
 }
