@@ -1,3 +1,8 @@
+If you want to override default ports:
+```
+$ cp .env.dist .env
+```
+
 To run project:
 ```
 $ make dcup                                     # docker-compose up -d

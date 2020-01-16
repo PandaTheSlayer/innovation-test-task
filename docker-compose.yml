@@ -6,7 +6,7 @@ services:
       context: docker/fpm
       dockerfile: Dockerfile
     ports:
-    - '9000:9000'
+    - ${FPM_PORT:-9000}:9000
     volumes:
     - ./api:/app
     working_dir: /app
@@ -15,7 +15,7 @@ services:
     image: nginx
     working_dir: /app
     ports:
-    - '7777:80'
+    - ${NGINX_PORT:-80}:80
     volumes:
     - ./api:/app
     - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf

@@ -7,13 +7,19 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 use GuzzleHttp\Client;
 use GuzzleHttp\TransferStats;
 
+// Define minutes for how long script will be executing
 $minutes = $argv[1] ?? exit('Please, provide minutes as arg!' . PHP_EOL);
+// Define threshold, after which request will mark as thresholded
 $threshold = $argv[2] ?? 0.5;
-$seconds = $minutes * 60;
+// Define script start time
 $startTime = time();
+
 $totalReqs = 0;
 $thresholdedReqs = 0;
 $reqTimeVals = [];
+
+
+$seconds = $minutes * 60;
 
 $timeToEnd = (int)($startTime + $seconds);
 
